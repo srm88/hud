@@ -1,0 +1,22 @@
+# Bash tab completion script for hud. Tab completes to entries within HUD_ROOT.
+# The hud executable takes just a basename as an argument, so if HUD_ROOT is
+# /var/lib/hud and contains a file "comics", the invocation is `hud comics`.
+# Hence we complete files under HUD_ROOT but strip the leading path.
+export FIGNORE=git
+_hud ()
+{
+    HUD_ROOT="${HUD_ROOT:-/var/lib/hud}"
+    if [[ ! -d "$HUD_ROOT" ]]; then
+        return 1
+    fi
+    local cur
+    COMPREPLY=()
+    cur=${COMP_WORDS[COMP_CWORD]}
+    case "$cur" in
+        *)
+            COMPREPLY=( $(basename $(compgen -f $HUD_ROOT/$cur) ) )
+            ;;
+    esac
+    return 0
+} &&
+complete -o filenames -F _hud hud

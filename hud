@@ -1,0 +1,32 @@
+#!/bin/bash
+
+function new_chrome_window () {
+    bash -c "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --new-window $@"
+}
+
+# Set up the directory containing files of urls, if necessary
+HUD_ROOT="${HUD_ROOT:-/var/lib/hud}"
+if [[ ! -d "$HUD_ROOT" ]]; then
+    mkdir -p "$HUD_ROOT" >/dev/null 2>&1 || echo "Unable to create folder $HUD_ROOT. Retry with sudo" >&2; exit 1
+    chmod 0777 "$HUD_ROOT"
+fi
+
+# Check the specified url file
+URL_FILE="$HUD_ROOT/$1"
+if [[ ! -f "$URL_FILE" ]]; then
+    echo "Provide a file with a list of urls" >&2
+    exit 0
+fi
+
+# Parse the file into a list of urls
+URLS="$(cat $URL_FILE | tr '\n' ' ')"
+if [[ "$URLS" == "" ]]; then
+    echo "No urls in $URL_FILE" >&2
+    exit 0
+fi
+
+# Start a new chrome window with the given urls in separate tabs
+new_chrome_window $URLS
+
+# Switch to the chrome app
+bash -c "/usr/bin/open -a Google\ Chrome"
