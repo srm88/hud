@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function new_chrome_window () {
-    bash -c "/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --new-window $@"
+    /Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome --new-window $@
 }
 
 # Set up the directory containing files of urls, if necessary
@@ -29,4 +29,4 @@ fi
 new_chrome_window $URLS
 
 # Switch to the chrome app
-bash -c "/usr/bin/open -a Google\ Chrome"
+/usr/bin/open -a Google\ Chrome
