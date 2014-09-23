@@ -1,4 +1,4 @@
-= hud
+# hud
 hud opens a chrome window with a list of urls.
 You write the urls in a file.
 You can have many of these files.
@@ -11,7 +11,7 @@ $ echo "http://fuckyeahdementia.tumblr.com" >> $HUD_ROOT/bored
 $ hud bored
 ```
 
-= Install
+# Install
 Place the hud script somewhere on your path.
 
 hud will try to make $HUD_ROOT, which defaults to /var/lib/hud, when invoked.
